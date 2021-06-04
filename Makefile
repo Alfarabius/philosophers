@@ -7,10 +7,14 @@ INC_PATH	=	./
 HEAD		=	philosophers.h
 
 SRCS		=	philosophers.c \
+				philo_factory.c \
+				philo_methods.c \
+				simulation.c \
 				options.c \
 				utils.c \
-				error.c
-				
+				error.c \
+				ft_dlst.c
+
 OBJS		=	$(addprefix $(OBJS_PATH)/, $(SRCS:.c=.o))
 RM			=	rm -f
 RM_DIR		=	rm -rf
@@ -27,7 +31,7 @@ $(OBJS_PATH)/%.o:	$(SRCS_PATH)/%.c $(HEAD)
 	@ $(CC) $(CFLAGS) $(INC) -c $< -o $@ -g
 
 $(NAME_ONE):	$(HEAD)	$(OBJS)
-	@ $(CC) $(CFLAGS) $(INC) $(OBJS) -o $(NAME)
+	@ $(CC) $(CFLAGS) $(INC) $(OBJS) -o $(NAME_ONE)
 
 $(NAME_TWO):
 	@ echo "not now"

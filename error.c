@@ -17,12 +17,14 @@ static int	is_numeric(STRING arg)
 
 int	is_not_valid_args(int argc, STRING *argv)
 {
-	if (argc != 6 || argc != 5)
+	if (argc != 5 && argc != 6)
 		return (error_handler("wrong number of arguments"));
-	while (argv++)
+	argv += 1;
+	while (*argv)
 	{
 		if (!is_numeric(*argv))
 			return(error_handler("arguments must be numeric"));
+		argv++;
 	}
 	return (0);
 }

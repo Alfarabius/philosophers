@@ -1,6 +1,6 @@
 #include "philosophers.h"
 
-void	*sleep(void *buf)
+void	*sleep_(void *buf)
 {
 	printf ("%s\n", (STRING)buf);
 	return (NULL);
