@@ -12,8 +12,7 @@ SRCS		=	philosophers.c \
 				simulation.c \
 				options.c \
 				utils.c \
-				error.c \
-				ft_dlst.c
+				error.c
 
 OBJS		=	$(addprefix $(OBJS_PATH)/, $(SRCS:.c=.o))
 RM			=	rm -f

@@ -29,8 +29,10 @@ int64_t	ft_atoi(const char *str)
 
 time_t	get_timestamp(t_philo philo)
 {
-	struct timeval time;
+	struct timeval	time;
+	time_t			curr;
 
 	gettimeofday(&time, NULL);
-	return (*philo.start_time - time.tv_sec / 10);
+	curr = time.tv_usec - *philo.start_time;
+	return (curr / 1000);
 }

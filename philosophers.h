@@ -36,7 +36,7 @@ typedef struct s_sim
 {
 	t_philo		**philo;
 	t_opts		*opts;
-	time_t		start_time;
+	time_t		*start_time;
 	uint8_t		*forks;
 }				t_sim;
 

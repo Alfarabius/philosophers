@@ -7,7 +7,7 @@ static t_philo *create_philosoph(uint64_t number, uint64_t amount, t_sim sim)
 	philo = (t_philo *)malloc(sizeof(t_philo));
 	if (philo)
 	{
-		philo->start_time = &sim.start_time;
+		philo->start_time = sim.start_time;
 		philo->number = number;
 		philo->left_fork = number;
 		philo->right_fork = (number + 1) % amount;

@@ -8,7 +8,7 @@ void	init_simulation(t_sim *sim, t_opts *opts)
 	struct timeval time;
 
 	gettimeofday(&time, NULL);
-	sim->start_time = time.tv_sec / 10;
+	*sim->start_time = time.tv_usec;
 	sim->philo = NULL;
 	sim->opts = opts;
 }
