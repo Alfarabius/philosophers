@@ -1,37 +1,45 @@
 #include "philosophers.h"
 
-static t_philo *create_philosoph(uint64_t number)
+static t_philo *create_philosoph(uint64_t number, uint64_t amount, t_sim sim)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)malloc(sizeof(t_philo));
 	if (philo)
 	{
+		philo->start_time = &sim.start_time;
 		philo->number = number;
-		philo->die = die;
-		philo->eat = eat;
-		philo->sleep = sleep_;
-		philo->think = think;
-		philo->take_a_fork = take_a_fork;
+		philo->left_fork = number;
+		philo->right_fork = (number + 1) % amount;
+		philo->fdie = die;
+		philo->feat = eat;
+		philo->fsleep = sleep_;
+		philo->fthink = think;
+		philo->ftake_a_fork = take_a_fork;
+		philo->get_time = get_timestamp;
 	}
 	return (philo);
 }
 
 int	create_philosophers(t_sim *sim, uint64_t amount)
 {
-	t_philo		*philo;
-	t_dlst		*new_ph;
 	uint64_t	number;
+	uint64_t	i;
 
-	number = 1;
-	while(amount--)
-	{
-		philo = create_philosoph(number);
-		new_ph = ft_dlst_new((void *)philo);
-		if(!philo || !new_ph)
+	number = 0;
+	i = amount;
+	sim->forks = (uint8_t *)malloc(sizeof(uint8_t) * amount);
+	sim->philo = (t_philo **)malloc(sizeof(t_philo *) * amount + 1);
+	if(!sim->philo || !sim->forks)
 			return (0);
-		ft_dlstadd_back(&sim->philo_lst, new_ph);
+	memset(sim->forks, '1', amount);
+	while(i--)
+	{
+		sim->philo[number] = create_philosoph(number + 1, amount, *sim);
+		if(!sim->philo[number])
+			return (0);
 		number++;
 	}
+	sim->philo[number] = NULL;
 	return (1);
 }

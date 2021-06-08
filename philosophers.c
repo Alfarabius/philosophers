@@ -5,7 +5,11 @@
 
 void	init_simulation(t_sim *sim, t_opts *opts)
 {
-	sim->philo_lst = NULL;
+	struct timeval time;
+
+	gettimeofday(&time, NULL);
+	sim->start_time = time.tv_sec / 10;
+	sim->philo = NULL;
 	sim->opts = opts;
 }
 
