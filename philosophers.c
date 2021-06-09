@@ -3,7 +3,7 @@
 /* 1)number_of_philosophers 2)time_to_die 3)time_to_eat
 4)time_to_sleep 5)[number_of_times_each_philosopher_must_eat] */
 
-void	init_simulation(t_sim *sim, t_opts *opts)
+static	void	init_simulation(t_sim *sim, t_opts *opts)
 {
 	struct timeval time;
 
@@ -11,6 +11,12 @@ void	init_simulation(t_sim *sim, t_opts *opts)
 	*sim->start_time = time.tv_usec;
 	sim->philo = NULL;
 	sim->opts = opts;
+}
+
+static	void	destroy_simulation(t_sim *sim, t_opts opts)
+{
+	destroy_philosophers(sim->philo, opts.philo_amount);
+	destroy_forks(sim->forks, opts.forks_amount);
 }
 
 int	main(int argc, STRING *argv)
@@ -22,8 +28,10 @@ int	main(int argc, STRING *argv)
 		return (1);
 	parse_options(argv, &options);
 	init_simulation(&simul, &options);
-	if (!create_philosophers(&simul, options.philo_amount))
+	if (!create_philosophers(&simul, options.philo_amount) || \
+	!create_forks(&simul, options.forks_amount))
 		return (error_handler("memmory doesn't allocated"));
 	start_simulation(&simul);
+	destroy_simulation(&simul, options);
 	return (0);
 }
