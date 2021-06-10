@@ -1,6 +1,8 @@
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 # define STRING char *
+# define TRUE 1
+# define FALSE 0
 # include <pthread.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -12,26 +14,29 @@ typedef struct s_opts
 {
 	uint64_t	philo_amount;
 	uint64_t	forks_amount;
-	uint64_t	time_to_die;
-	uint64_t	time_to_eat;
-	uint64_t	time_to_sleep;
+	time_t		time_to_die;
+	time_t		time_to_eat;
+	time_t		time_to_sleep;
 	uint64_t	eating_times;
 }				t_opts;
 
-typedef struct s_philosopher
+typedef struct s_philo
 {
+	uint8_t			is_alive;
 	pthread_t		life;
 	uint64_t		number;
+	uint64_t		right_fork_number;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	time_t			*start_time;
+	t_opts			*opts;
 	void			*(*start)(void*);
-	void			*(*fsleep)(void *);
-	void			*(*feat)(void *);
-	void			*(*fdie)(void *);
-	void			*(*fthink)(void *);
-	void			*(*ftake_a_fork)(void *);
-	time_t			(*get_time)(struct s_philosopher);
+	void			(*fsleep)(struct s_philo *, time_t);
+	void			(*feat)(struct s_philo *, time_t);
+	void			(*fdie)(void *);
+	void			(*fthink)(void *);
+	void			(*ftake_a_fork)(struct s_philo *, pthread_mutex_t *);
+	time_t			(*get_time)(struct s_philo);
 }					t_philo;
 
 typedef struct s_sim
@@ -50,13 +55,13 @@ int			create_forks(t_sim *sim, uint64_t amount);
 void		destroy_forks(pthread_mutex_t **forks, uint64_t amount);
 void		destroy_philosophers(t_philo **philo, uint64_t amount);
 void		parse_options(STRING *args, t_opts *options);
-void		start_simulation(t_sim *sim);
+void		start_simulation(t_philo **philo, t_opts *opts);
 void		*start(void *self);
-void		*sleep_(void *self);
-void		*eat(void *self);
-void		*die(void *self);
-void		*think(void *self);
-void		*take_a_fork(void *self);
+void		sleep_(t_philo *self, time_t time_to_sleep);
+void		eat(t_philo *self, time_t time_to_eat);
+void		die(void *self);
+void		think(void *self);
+void		take_a_fork(t_philo *self, pthread_mutex_t *fork);
 void		pick_fork(pthread_mutex_t *fork);
 void		put_fork(pthread_mutex_t *fork);
 time_t		get_timestamp(t_philo philo);

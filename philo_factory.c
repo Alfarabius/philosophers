@@ -7,10 +7,13 @@ static t_philo	*create_philosoph(uint64_t number, uint64_t amount, t_sim sim)
 	philo = (t_philo *)malloc(sizeof(t_philo));
 	if (philo)
 	{
+		philo->is_alive = TRUE;
+		philo->opts = sim.opts;
 		philo->start_time = sim.start_time;
 		philo->number = number;
+		philo->right_fork_number = (number + 1) % amount;
 		philo->left_fork = sim.forks[number];
-		philo->right_fork = sim.forks[(number + 1) % amount];
+		philo->right_fork = sim.forks[philo->right_fork_number];
 		philo->fdie = die;
 		philo->feat = eat;
 		philo->fsleep = sleep_;
@@ -18,7 +21,6 @@ static t_philo	*create_philosoph(uint64_t number, uint64_t amount, t_sim sim)
 		philo->ftake_a_fork = take_a_fork;
 		philo->get_time = get_timestamp;
 		philo->start = start;
-		pthread_create(&philo->life, NULL, start, (void *)philo);
 	}
 	return (philo);
 }

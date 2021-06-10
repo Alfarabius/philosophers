@@ -12,20 +12,22 @@ void	put_fork(pthread_mutex_t *fork)
 
 int	create_forks(t_sim *sim, uint64_t amount)
 {
-	pthread_mutex_t	*fork;
+	uint64_t		i;
+	int				err;
 
 	sim->forks = (pthread_mutex_t **)malloc(sizeof(pthread_mutex_t *) * (amount + 1));
 	if (!sim->forks)
 		return (0);
-	sim->forks[amount] = NULL;
-	while (amount)
+	i = 0;
+	while (i < amount)
 	{
-		fork = sim->forks[amount - 1];
-		fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-		if (!fork || pthread_mutex_init(fork, NULL))
+		sim->forks[i] = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+		err = pthread_mutex_init(sim->forks[i], NULL);
+		if (!sim->forks[i] || err)
 			return(0);
-		amount--;
+		i++;
 	}
+	sim->forks[amount] = NULL;
 	return (1);
 }
 

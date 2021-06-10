@@ -28,10 +28,10 @@ int	main(int argc, STRING *argv)
 		return (1);
 	parse_options(argv, &options);
 	init_simulation(&simul, &options);
-	if (!create_philosophers(&simul, options.philo_amount) || \
-	!create_forks(&simul, options.forks_amount))
+	if (!create_forks(&simul, options.forks_amount) || \
+	!create_philosophers(&simul, options.philo_amount))
 		return (error_handler("memmory doesn't allocated"));
-	start_simulation(&simul);
+	start_simulation(simul.philo, simul.opts);
 	destroy_simulation(&simul, options);
 	return (0);
 }
