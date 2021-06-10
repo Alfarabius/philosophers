@@ -27,7 +27,7 @@ int	create_forks(t_sim *sim, uint64_t amount)
 			return(0);
 		i++;
 	}
-	sim->forks[amount] = NULL;
+	sim->forks[amount] = sim->forks[0];
 	return (1);
 }
 

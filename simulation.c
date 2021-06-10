@@ -19,13 +19,23 @@ void	start_simulation(t_philo **philo, t_opts *opts)
 		pthread_create(&philo[number]->life, NULL, start, (void *)philo[number]);
 		number++;
 	}
+	// number = 0;
+	// while (number < opts->philo_amount)
+	// {
+	// 	pthread_join(philo[number]->life, NULL);
+	// 	number++;
+	// }
+	
 	while (all_philosophers_are_alive)
 	{
 		number = 0;
 		while (number < opts->philo_amount)
 		{
 			if (philo[number]->is_alive == FALSE)
+			{
 				all_philosophers_are_alive = FALSE;
+				break ;
+			}
 			number++;
 		}
 	}
