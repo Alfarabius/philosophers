@@ -25,9 +25,10 @@ typedef struct s_philo
 	uint8_t			is_alive;
 	pthread_t		life;
 	uint64_t		number;
-	uint64_t		right_fork_number;
+	uint64_t		left_fork_number;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
+	uint8_t			**dead;
 	time_t			*start_time;
 	t_opts			*opts;
 	void			*(*start)(void*);
@@ -37,14 +38,17 @@ typedef struct s_philo
 	void			(*fthink)(void *);
 	void			(*ftake_a_fork)(struct s_philo *, pthread_mutex_t *);
 	time_t			(*get_time)(struct s_philo);
+	uint8_t			*is_start;
 }					t_philo;
 
 typedef struct s_sim
 {
+	uint8_t			is_start;
 	t_philo			**philo;
 	t_opts			*opts;
 	time_t			*start_time;
 	pthread_mutex_t	**forks;
+	uint8_t			someone_dead;
 }					t_sim;
 
 int64_t		ft_atoi(const char *str);
@@ -52,10 +56,11 @@ int			is_not_valid_args(int argc, STRING *argv);
 int			error_handler(STRING msg);
 int			create_philosophers(t_sim *sim, uint64_t amount);
 int			create_forks(t_sim *sim, uint64_t amount);
+void		print_msg(time_t time, uint64_t number, STRING msg);
 void		destroy_forks(pthread_mutex_t **forks, uint64_t amount);
 void		destroy_philosophers(t_philo **philo, uint64_t amount);
 void		parse_options(STRING *args, t_opts *options);
-void		start_simulation(t_philo **philo, t_opts *opts);
+void		start_simulation(t_philo **philo, t_opts *opts, t_sim *sim);
 void		*start(void *self);
 void		sleep_(t_philo *self, time_t time_to_sleep);
 void		eat(t_philo *self, time_t time_to_eat);

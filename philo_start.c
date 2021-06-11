@@ -9,22 +9,23 @@ void	*start(void *self)
 	time_t			meal_time;
 
 	philo = (t_philo *)self;
-	if (philo->right_fork_number > philo->number)
-	{
-		first_fork = philo->left_fork;
-		second_fork = philo->right_fork;
-	}
-	else
+	if (philo->left_fork_number > philo->number)
 	{
 		first_fork = philo->right_fork;
 		second_fork = philo->left_fork;
 	}
+	else
+	{
+		first_fork = philo->left_fork;
+		second_fork = philo->right_fork;
+	}
+	while (!philo->is_start);
 	while (philo->is_alive)
 	{
 		philo->ftake_a_fork(philo, first_fork);
 		philo->ftake_a_fork(philo, second_fork);
 		meal_time = get_timestamp(*philo);
-		if (meal_time - last_meal_time > philo->opts->time_to_eat)
+		if (meal_time - last_meal_time > philo->opts->time_to_die)
 		{
 			philo->fdie(self);
 			break ;

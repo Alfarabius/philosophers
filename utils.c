@@ -33,6 +33,7 @@ time_t	get_timestamp(t_philo philo)
 	time_t			curr;
 
 	gettimeofday(&time, NULL);
-	curr = (time.tv_usec / 1000) + (time.tv_sec * 1000) - *philo.start_time;
+	curr = (time.tv_usec / 1000) + \
+	(time.tv_sec * 1000) - *philo.start_time;
 	return (curr);
 }

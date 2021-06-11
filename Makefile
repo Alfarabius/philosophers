@@ -9,6 +9,7 @@ SRCS		=	philosophers.c \
 				philo_factory.c \
 				philo_methods.c \
 				philo_start.c \
+				print_msg.c \
 				simulation.c \
 				options.c \
 				utils.c \
