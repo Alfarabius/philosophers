@@ -7,8 +7,7 @@ static t_philo	*create_philosoph(uint64_t number, uint64_t amount, t_sim sim)
 	philo = (t_philo *)malloc(sizeof(t_philo));
 	if (philo)
 	{
-		philo->dead = (uint8_t **)malloc(16);
-		*philo->dead = &sim.someone_dead;
+		philo->dead = sim.someone_dead;
 		philo->is_alive = TRUE;
 		philo->opts = sim.opts;
 		philo->start_time = sim.start_time;
@@ -16,7 +15,7 @@ static t_philo	*create_philosoph(uint64_t number, uint64_t amount, t_sim sim)
 		philo->left_fork_number = (number + 1) % amount;
 		philo->right_fork = sim.forks[number];
 		philo->left_fork = sim.forks[philo->left_fork_number];
-		philo->is_start = &sim.is_start;
+		philo->is_start = sim.is_start;
 		philo->fdie = die;
 		philo->feat = eat;
 		philo->fsleep = sleep_;

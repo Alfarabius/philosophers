@@ -23,14 +23,16 @@ typedef struct s_opts
 typedef struct s_philo
 {
 	uint8_t			is_alive;
+	int				*is_start;
 	pthread_t		life;
 	uint64_t		number;
 	uint64_t		left_fork_number;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	uint8_t			**dead;
+	pthread_mutex_t	*dead;
 	time_t			*start_time;
 	t_opts			*opts;
+	time_t			last_meal_time;
 	void			*(*start)(void*);
 	void			(*fsleep)(struct s_philo *, time_t);
 	void			(*feat)(struct s_philo *, time_t);
@@ -38,17 +40,16 @@ typedef struct s_philo
 	void			(*fthink)(void *);
 	void			(*ftake_a_fork)(struct s_philo *, pthread_mutex_t *);
 	time_t			(*get_time)(struct s_philo);
-	uint8_t			*is_start;
 }					t_philo;
 
 typedef struct s_sim
 {
-	uint8_t			is_start;
+	int				*is_start;
 	t_philo			**philo;
 	t_opts			*opts;
 	time_t			*start_time;
 	pthread_mutex_t	**forks;
-	uint8_t			someone_dead;
+	pthread_mutex_t	*someone_dead;
 }					t_sim;
 
 int64_t		ft_atoi(const char *str);
