@@ -1,26 +1,50 @@
 #include "philosophers.h"
 
-/*
-Taken fork if both avilable
-Each time a philosopher has finished eating, he will drop his forks and start sleeping.
-When a philosopher is done sleeping, he will start thinking.
-The simulation stops when a philosopher dies.
-*/
+static void	*dead_checker(void *simul)
+{
+	uint64_t	amount;
+	t_sim		*sim;
+	t_philo		*philo;
+	time_t		pause;
+
+	sim = (t_sim *)simul;
+	while (TRUE)
+	{
+		usleep(100);
+		amount = sim->opts->philo_amount;
+		while(amount)
+		{
+			amount--;
+			philo = sim->philo[amount];
+			pause = get_timestamp(*philo) - philo->last_meal_time;
+			if (pause >= philo->opts->time_to_die)
+			{
+				philo->fdie((void *)philo);
+				printf("last_meal = %ld", philo->last_meal_time);
+				pthread_mutex_lock(sim->simulation);
+				return (NULL);
+			}
+		}
+	}
+	return (NULL);
+}
 
 void	start_simulation(t_philo **philo, t_opts *opts, t_sim *sim)
 {
 	uint64_t		number;
 	struct timeval	time;
+	pthread_t		dead_waiter;
 
 	number = 0;
+	gettimeofday(&time, NULL);
+	*sim->start_time =	(time.tv_usec / 1000) + (time.tv_sec * 1000);
 	while (number < opts->philo_amount)
 	{
 		pthread_create(&philo[number]->life, NULL, start, (void *)philo[number]);
 		number++;
 	}
-	gettimeofday(&time, NULL);
-	*sim->start_time =	(time.tv_usec / 1000) + (time.tv_sec * 1000);
-	*sim->is_start = TRUE;
+	// dead_checker((void *)sim);
+	pthread_create(&dead_waiter, NULL, dead_checker, (void *)sim);
 	pthread_mutex_lock(sim->someone_dead);
-	write (1, "del simulation\n", 16);
+	pthread_detach(dead_waiter);
 }

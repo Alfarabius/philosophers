@@ -8,6 +8,7 @@ static t_philo	*create_philosoph(uint64_t number, uint64_t amount, t_sim sim)
 	if (philo)
 	{
 		philo->dead = sim.someone_dead;
+		philo->simulation = sim.simulation;
 		philo->is_alive = TRUE;
 		philo->opts = sim.opts;
 		philo->start_time = sim.start_time;

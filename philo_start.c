@@ -1,14 +1,9 @@
 #include "philosophers.h"
 
-static int	is_dead(t_philo *philo)
+static void	check_simulation(t_philo *philo)
 {
-	if (get_timestamp(*philo) - philo->last_meal_time > \
-		philo->opts->time_to_die)
-		{
-			philo->fdie((void *)philo);
-			return (TRUE);
-		}
-	return (FALSE);
+	pthread_mutex_lock(philo->simulation);
+	pthread_mutex_unlock(philo->simulation);
 }
 
 void	*start(void *self)
@@ -28,19 +23,22 @@ void	*start(void *self)
 		first_fork = philo->left_fork;
 		second_fork = philo->right_fork;
 	}
-	while (!*philo->is_start);
-	philo->last_meal_time = *philo->start_time;
+	philo->last_meal_time = get_timestamp(*philo);
 	while (philo->is_alive)
 	{
+		check_simulation(philo);
 		philo->ftake_a_fork(philo, first_fork);
+		check_simulation(philo);
 		philo->ftake_a_fork(philo, second_fork);
-		if (is_dead(philo))
-			break ;
-		philo->feat(philo, philo->opts->time_to_eat);
 		philo->last_meal_time = get_timestamp(*philo);
+		check_simulation(philo);
+		philo->feat(philo, philo->opts->time_to_eat);
+		check_simulation(philo);
 		put_fork(second_fork);
 		put_fork(first_fork);
+		check_simulation(philo);
 		philo->fsleep(philo, philo->opts->time_to_sleep);
+		check_simulation(philo);
 		philo->fthink(self);
 	}
 	return (NULL);

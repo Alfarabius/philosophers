@@ -7,8 +7,8 @@ void	sleep_(t_philo *self, time_t time_to_sleep)
 
 	number = ((t_philo *)self)->number;
 	time = get_timestamp(*((t_philo *)self));
-	//printf ("%ld %llu is sleeping\n", time, number);
-	print_msg(time, number, " is sleeping\n");
+	printf ("%ld %llu is sleeping\n", time, number);
+	;
 	usleep(time_to_sleep * 1000);
 }
 
@@ -19,8 +19,8 @@ void	eat(t_philo *self, time_t time_to_eat)
 
 	number = self->number;
 	time = get_timestamp(*self);
-	//printf ("%ld %llu is eating\n", time, number);
-	print_msg(time, number, " is eating\n");
+	printf ("%ld %llu is eating\n", time, number);
+	;
 	usleep(time_to_eat * 1000);
 }
 
@@ -31,8 +31,8 @@ void	die(void *self)
 
 	number = ((t_philo *)self)->number;
 	time = get_timestamp(*((t_philo *)self));
-	//printf ("%ld %llu is died\n", time, number);
-	print_msg(time, number, " is died\n");
+	printf ("%ld %llu is died\n", time, number);
+	;
 	((t_philo *)self)->is_alive = FALSE;
 	pthread_mutex_unlock(((t_philo *)self)->dead);
 }
@@ -44,8 +44,8 @@ void	think(void *self)
 
 	number = ((t_philo *)self)->number;
 	time = get_timestamp(*((t_philo *)self));
-	//printf ("%ld %llu is thinking\n", time, number);
-	print_msg(time, number, " is thinking\n");
+	printf ("%ld %llu is thinking\n", time, number);
+	;
 }
 
 void	take_a_fork(t_philo *self, pthread_mutex_t *fork)
@@ -55,7 +55,7 @@ void	take_a_fork(t_philo *self, pthread_mutex_t *fork)
 
 	number = self->number;
 	time = get_timestamp(*self);
+	printf ("%ld %llu has taken a fork\n", time, number);
+	;
 	pick_fork(fork);
-	//printf ("%ld %llu has taken a fork\n", time, number);
-	print_msg(time, number, " has taken a fork\n");
 }
