@@ -9,20 +9,17 @@ static	int	init_simulation(t_sim *sim, t_opts *opts)
 
 	time = (struct timeval *)malloc(sizeof(struct timeval));
 	sim->start_time = (time_t *)malloc(sizeof(time_t));
-	sim->someone_dead = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 	sim->simulation = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	sim->is_start = (int *)malloc(sizeof(int));
-	if (!time || !sim->someone_dead || !sim->simulation \
-	|| !sim->start_time || !sim->is_start)
+	sim->is_start = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	if (!time || !sim->simulation || !sim->start_time || !sim->is_start)
 		return (0);
-	pthread_mutex_init(sim->someone_dead, NULL);
 	pthread_mutex_init(sim->simulation, NULL);
-	pthread_mutex_lock(sim->someone_dead);
+	pthread_mutex_init(sim->is_start, NULL);
+	pthread_mutex_lock(sim->is_start);
 	gettimeofday(time, NULL);
 	*sim->start_time = (time->tv_usec / 1000) + (time->tv_sec * 1000);
 	sim->philo = NULL;
 	sim->opts = opts;
-	*sim->is_start = FALSE;
 	free(time);
 	return (1);
 }

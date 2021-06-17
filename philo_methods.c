@@ -14,12 +14,11 @@ void	sleep_(t_philo *self, time_t time_to_sleep)
 
 void	eat(t_philo *self, time_t time_to_eat)
 {
-	time_t		time;
 	uint64_t	number;
 
+	self->last_meal_time = get_timestamp(*self);
 	number = self->number;
-	time = get_timestamp(*self);
-	printf ("%ld %llu is eating\n", time, number);
+	printf ("%ld %llu is eating\n", self->last_meal_time, number);
 	;
 	usleep(time_to_eat * 1000);
 }
@@ -33,8 +32,6 @@ void	die(void *self)
 	time = get_timestamp(*((t_philo *)self));
 	printf ("%ld %llu is died\n", time, number);
 	;
-	((t_philo *)self)->is_alive = FALSE;
-	pthread_mutex_unlock(((t_philo *)self)->dead);
 }
 
 void	think(void *self)
@@ -53,9 +50,9 @@ void	take_a_fork(t_philo *self, pthread_mutex_t *fork)
 	time_t		time;
 	uint64_t	number;
 
+	pick_fork(fork);
 	number = self->number;
 	time = get_timestamp(*self);
-	printf ("%ld %llu has taken a fork\n", time, number);
+	printf ("%ld %llu has taken a fork\nleft fork N = %lld, right fork N = %lld\n", time, number, self->left_fork_number, self->number - 1);
 	;
-	pick_fork(fork);
 }

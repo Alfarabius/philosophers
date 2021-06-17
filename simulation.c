@@ -33,18 +33,15 @@ void	start_simulation(t_philo **philo, t_opts *opts, t_sim *sim)
 {
 	uint64_t		number;
 	struct timeval	time;
-	pthread_t		dead_waiter;
 
 	number = 0;
-	gettimeofday(&time, NULL);
-	*sim->start_time =	(time.tv_usec / 1000) + (time.tv_sec * 1000);
 	while (number < opts->philo_amount)
 	{
 		pthread_create(&philo[number]->life, NULL, start, (void *)philo[number]);
 		number++;
 	}
-	// dead_checker((void *)sim);
-	pthread_create(&dead_waiter, NULL, dead_checker, (void *)sim);
-	pthread_mutex_lock(sim->someone_dead);
-	pthread_detach(dead_waiter);
+	gettimeofday(&time, NULL);
+	*sim->start_time =	(time.tv_usec / 1000) + (time.tv_sec * 1000);
+	pthread_mutex_unlock(sim->is_start);
+	dead_checker((void *)sim);
 }

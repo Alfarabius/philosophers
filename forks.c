@@ -15,7 +15,7 @@ int	create_forks(t_sim *sim, uint64_t amount)
 	uint64_t		i;
 	int				err;
 
-	sim->forks = (pthread_mutex_t **)malloc(sizeof(pthread_mutex_t *) * (amount + 1));
+	sim->forks = (pthread_mutex_t **)malloc(sizeof(pthread_mutex_t *) * (amount));
 	if (!sim->forks)
 		return (0);
 	i = 0;
@@ -27,7 +27,7 @@ int	create_forks(t_sim *sim, uint64_t amount)
 			return(0);
 		i++;
 	}
-	sim->forks[amount] = sim->forks[0];
+	sim->forks[amount] = NULL;
 	return (1);
 }
 
