@@ -10,10 +10,10 @@ void	put_fork(pthread_mutex_t *fork)
 	pthread_mutex_unlock(fork);
 }
 
-int	create_forks(t_sim *sim, uint64_t amount)
+int	create_forks(t_sim *sim, int amount)
 {
-	uint64_t		i;
-	int				err;
+	int	i;
+	int	err;
 
 	sim->forks = (pthread_mutex_t **)malloc(sizeof(pthread_mutex_t *) * (amount));
 	if (!sim->forks)
@@ -31,7 +31,7 @@ int	create_forks(t_sim *sim, uint64_t amount)
 	return (1);
 }
 
-void	destroy_forks(pthread_mutex_t **forks, uint64_t amount)
+void	destroy_forks(pthread_mutex_t **forks, int amount)
 {
 	pthread_mutex_t	*fork;
 

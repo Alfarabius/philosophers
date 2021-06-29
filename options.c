@@ -9,4 +9,6 @@ void	parse_options(STRING *args, t_opts *options)
 	options->time_to_sleep = ft_atoi(args[4]);
 	if (args[5])
 		options->eating_times = ft_atoi(args[5]);
+	else
+		options->eating_times = -1;
 }

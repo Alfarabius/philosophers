@@ -1,16 +1,19 @@
 #include "philosophers.h"
 
-static t_philo	*create_philosoph(uint64_t number, uint64_t amount, t_sim sim)
+static t_philo	*create_philosoph(int number, int amount, t_sim sim)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)malloc(sizeof(t_philo));
 	if (philo)
 	{
+		philo->can_eat = FALSE;
+		philo->eating_times = 0;
 		philo->simulation = sim.simulation;
 		philo->opts = sim.opts;
 		philo->start_time = sim.start_time;
 		philo->number = number + 1;
+		philo->priority = philo->number & 1;
 		philo->left_fork_number = (number + 1) % amount;
 		philo->right_fork = sim.forks[number];
 		philo->left_fork = sim.forks[philo->left_fork_number];
@@ -26,10 +29,10 @@ static t_philo	*create_philosoph(uint64_t number, uint64_t amount, t_sim sim)
 	return (philo);
 }
 
-int	create_philosophers(t_sim *sim, uint64_t amount)
+int	create_philosophers(t_sim *sim, int amount)
 {
-	uint64_t	number;
-	uint64_t	i;
+	int	number;
+	int	i;
 
 	number = 0;
 	i = amount;
@@ -47,7 +50,7 @@ int	create_philosophers(t_sim *sim, uint64_t amount)
 	return (1);
 }
 
-void	destroy_philosophers(t_philo **philo, uint64_t amount)
+void	destroy_philosophers(t_philo **philo, int amount)
 {
 	while (amount)
 	{

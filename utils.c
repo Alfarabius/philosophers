@@ -1,8 +1,8 @@
 #include "philosophers.h"
 
-int64_t	ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
-	uint64_t	result;
+	int64_t	result;
 	int			sign;
 	int			i;
 
@@ -24,7 +24,7 @@ int64_t	ft_atoi(const char *str)
 		return (0);
 	else if (result > 9223372036854775807)
 		return (-1);
-	return ((int64_t)result * sign);
+	return ((int)result * sign);
 }
 
 time_t	get_timestamp(t_philo philo)

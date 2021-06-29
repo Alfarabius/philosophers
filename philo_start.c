@@ -13,7 +13,7 @@ void	*start(void *self)
 	pthread_mutex_t	*second_fork;
 
 	philo = (t_philo *)self;
-	if (philo->left_fork_number > philo->number - 1)
+	if ((philo->number & 1) == 0)
 	{
 		first_fork = philo->right_fork;
 		second_fork = philo->left_fork;
@@ -23,20 +23,32 @@ void	*start(void *self)
 		first_fork = philo->left_fork;
 		second_fork = philo->right_fork;
 	}
+	// if (philo->left_fork_number > philo->number - 1)
+	// {
+	// 	first_fork = philo->right_fork;
+	// 	second_fork = philo->left_fork;
+	// }
+	// else
+	// {
+	// 	first_fork = philo->left_fork;
+	// 	second_fork = philo->right_fork;
+	// }
 	pthread_mutex_lock(philo->is_start);
 	pthread_mutex_unlock(philo->is_start);
 	philo->last_meal_time = get_timestamp(*philo);
 	while (TRUE)
 	{
 		check_simulation(philo);
+		while (!philo->can_eat);
 		philo->ftake_a_fork(philo, first_fork);
-		first_fork == philo->left_fork ? printf("%lld take LEFT fork\n", philo->number) : printf("%lld take RIGHT fork\n", philo->number);
+		first_fork == philo->left_fork ? printf("%d take LEFT fork\n", philo->number) : printf("%d take RIGHT fork\n", philo->number);
 		;
 		check_simulation(philo);
 		philo->ftake_a_fork(philo, second_fork);
-		second_fork == philo->left_fork ? printf("%lld take LEFT fork\n", philo->number) : printf("%lld take RIGHT fork\n", philo->number);
+		second_fork == philo->left_fork ? printf("%d take LEFT fork\n", philo->number) : printf("%d take RIGHT fork\n", philo->number);
 		;
 		check_simulation(philo);
+		printf("i'am %d, my priority is %d\n", philo->number, philo->priority);
 		philo->feat(philo, philo->opts->time_to_eat);
 		check_simulation(philo);
 		put_fork(second_fork);
