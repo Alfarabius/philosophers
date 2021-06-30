@@ -7,7 +7,6 @@ static t_philo	*create_philosoph(int number, int amount, t_sim sim)
 	philo = (t_philo *)malloc(sizeof(t_philo));
 	if (philo)
 	{
-		philo->can_eat = FALSE;
 		philo->eating_times = 0;
 		philo->simulation = sim.simulation;
 		philo->opts = sim.opts;

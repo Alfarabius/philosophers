@@ -22,7 +22,7 @@ void	eat(t_philo *self, time_t time_to_eat)
 	;
 	usleep(time_to_eat * 1000);
 	self->eating_times += 1;
-	self->priority *= 0;
+	//self->priority *= 0;
 }
 
 void	die(void *self)

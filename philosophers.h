@@ -27,7 +27,6 @@ typedef struct s_philo
 	int				left_fork_number;
 	int				priority;
 	int				eating_times;
-	int				can_eat;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*simulation;
