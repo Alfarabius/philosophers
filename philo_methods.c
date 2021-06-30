@@ -31,7 +31,7 @@ void	die(void *self)
 
 	number = ((t_philo *)self)->number;
 	time = get_timestamp(*((t_philo *)self));
-	printf ("%ld %d is died\n", time, number);
+	printf ("%ld %d died\n", time, number);
 	;
 }
 
@@ -54,6 +54,6 @@ void	take_a_fork(t_philo *self, pthread_mutex_t *fork)
 	pick_fork(fork);
 	number = self->number;
 	time = get_timestamp(*self);
-	printf ("%ld %d has taken a fork\nleft fork N = %d, right fork N = %d\n", time, number, self->left_fork_number, self->number - 1);
+	printf ("%ld %d has taken a fork\n", time, number);
 	;
 }

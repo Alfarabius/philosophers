@@ -59,7 +59,7 @@ int			create_philosophers(t_sim *sim, int amount);
 int			create_forks(t_sim *sim, int amount);
 void		destroy_forks(pthread_mutex_t **forks, int amount);
 void		destroy_philosophers(t_philo **philo, int amount);
-void		parse_options(STRING *args, t_opts *options);
+int			parse_options(STRING *args, t_opts *options);
 void		start_simulation(t_philo **philo, t_opts *opts, t_sim *sim);
 void		*start(void *self);
 void		sleep_(t_philo *self, time_t time_to_sleep);

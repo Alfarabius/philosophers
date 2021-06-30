@@ -3,8 +3,8 @@
 int	ft_atoi(const char *str)
 {
 	int64_t	result;
-	int			sign;
-	int			i;
+	int		sign;
+	int		i;
 
 	result = 0;
 	sign = 1;
@@ -20,9 +20,9 @@ int	ft_atoi(const char *str)
 		i++;
 	while (str[i] >= '0' && str[i] <= '9')
 		result = result * 10 + (str[i++] - '0');
-	if (result > 9223372036854775807 && sign == -1)
+	if (result > 2147483648 && sign == -1)
 		return (0);
-	else if (result > 9223372036854775807)
+	else if (result > 2147483647)
 		return (-1);
 	return ((int)result * sign);
 }

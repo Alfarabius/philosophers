@@ -34,7 +34,8 @@ int	main(int argc, STRING *argv)
 
 	if (is_not_valid_args(argc, argv))
 		return (1);
-	parse_options(argv, &options);
+	if (!parse_options(argv, &options))
+		return (error_handler("too big, negative or zero argument"));
 	if (!init_simulation(&simul, &options) || \
 	!create_forks(&simul, options.forks_amount) || \
 	!create_philosophers(&simul, options.philo_amount))

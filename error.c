@@ -1,8 +1,19 @@
 #include "philosophers.h"
 
+size_t	ft_strlen(const char *s)
+{
+	size_t	len;
+
+	len = 0;
+	while (s[len])
+		len++;
+	return (len);
+}
+
 int	error_handler(STRING msg)
 {
-	printf("%s\n", msg);
+	write(2, msg, ft_strlen(msg));
+	write(2, "\n", 1);
 	return (1);
 }
 
