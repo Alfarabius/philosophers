@@ -12,7 +12,6 @@ static t_philo	*create_philosoph(int number, int amount, t_sim sim)
 		philo->opts = sim.opts;
 		philo->start_time = sim.start_time;
 		philo->number = number + 1;
-		philo->priority = philo->number & 1;
 		philo->left_fork_number = (number + 1) % amount;
 		philo->right_fork = sim.forks[number];
 		philo->left_fork = sim.forks[philo->left_fork_number];
