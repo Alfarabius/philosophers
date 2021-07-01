@@ -26,10 +26,13 @@ typedef struct s_philo
 	int				number;
 	int				left_fork_number;
 	int				eating_times;
+	int				forks_taken;
+	int				forks_put;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*simulation;
 	pthread_mutex_t	*is_start;
+	pthread_mutex_t	*log;
 	time_t			*start_time;
 	time_t			last_meal_time;
 	t_opts			*opts;
@@ -50,6 +53,7 @@ typedef struct s_sim
 	pthread_mutex_t	**forks;
 	pthread_mutex_t	*simulation;
 	pthread_mutex_t	*is_start;
+	pthread_mutex_t	*log;
 }					t_sim;
 
 int			ft_atoi(const char *str);

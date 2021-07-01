@@ -27,6 +27,8 @@ int	create_forks(t_sim *sim, int amount)
 			return(0);
 		i++;
 	}
+	printf("forks amount = %d\n", i);
+	printf("philo amount = %d\n", sim->opts->forks_amount);
 	return (1);
 }
 

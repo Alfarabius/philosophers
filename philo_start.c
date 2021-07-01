@@ -15,28 +15,35 @@ void	*start(void *self)
 	philo = (t_philo *)self;
 	first_fork = philo->right_fork;
 	second_fork = philo->left_fork;
-	if ((philo->number & 1) == 1)
-		usleep(500);
 	pthread_mutex_lock(philo->is_start);
 	pthread_mutex_unlock(philo->is_start);
 	philo->last_meal_time = get_timestamp(*philo);
+	if ((philo->number & 1) == 0)
+		usleep(500);
 	while (TRUE)
 	{
 		check_simulation(philo);
 		philo->ftake_a_fork(philo, first_fork);
-		// printf("%d take RIGHT fork\n", philo->number);
-		// ;
+		pthread_mutex_lock(philo->log);
+		printf("\x1B[32m%d\x1B[0m take RIGHT \x1B[31m(#%d)\x1B[0m fork\n", philo->number, philo->number - 1);
+		pthread_mutex_unlock(philo->log);
 		check_simulation(philo);
 		philo->ftake_a_fork(philo, second_fork);
-		// printf("%d take LEFT fork\n", philo->left_fork_number);
-		// ;
+		pthread_mutex_lock(philo->log);
+		printf("\x1B[32m%d\x1B[0m take LEFT \x1B[31m(#%d)\x1B[0m fork\n", philo->number, philo->left_fork_number);
+		pthread_mutex_unlock(philo->log);
 		check_simulation(philo);
 		philo->feat(philo, philo->opts->time_to_eat);
-		// check_simulation(philo);
 		put_fork(second_fork);
-		// printf("%d put LEFT fork\n", philo->number);
+		philo->forks_put += 1;
+		pthread_mutex_lock(philo->log);
+		printf("\x1B[32m%d\x1B[0m put LEFT \x1B[32m(#%d)\x1B[0m fork\n", philo->number, philo->left_fork_number);
+		pthread_mutex_unlock(philo->log);
 		put_fork(first_fork);
-		// printf("%d put RIGHT fork\n", philo->number);
+		philo->forks_put += 1;
+		pthread_mutex_lock(philo->log);
+		printf("\x1B[32m%d\x1B[0m put RIGHT \x1B[32m(#%d)\x1B[0m fork\n", philo->number, philo->number - 1);
+		pthread_mutex_unlock(philo->log);
 		check_simulation(philo);
 		philo->fsleep(philo, philo->opts->time_to_sleep);
 		check_simulation(philo);

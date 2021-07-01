@@ -11,6 +11,7 @@ static t_philo	*create_philosoph(int number, int amount, t_sim sim)
 		philo->simulation = sim.simulation;
 		philo->opts = sim.opts;
 		philo->start_time = sim.start_time;
+		philo->log = sim.log;
 		philo->number = number + 1;
 		philo->left_fork_number = (number + 1) % amount;
 		philo->right_fork = sim.forks[number];
@@ -34,7 +35,7 @@ int	create_philosophers(t_sim *sim, int amount)
 
 	number = 0;
 	i = amount;
-	sim->philo = (t_philo **)malloc(sizeof(t_philo *) * (amount + 1));
+	sim->philo = (t_philo **)malloc(sizeof(t_philo *) * (amount));
 	if(!sim->philo)
 			return (0);
 	while(i--)
@@ -44,7 +45,6 @@ int	create_philosophers(t_sim *sim, int amount)
 			return (0);
 		number++;
 	}
-	sim->philo[number] = NULL;
 	return (1);
 }
 

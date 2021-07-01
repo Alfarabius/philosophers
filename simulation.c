@@ -20,7 +20,7 @@ static void	*dead_checker(void *simul)
 			if (pause >= philo->opts->time_to_die)
 			{
 				philo->fdie((void *)philo);
-				// printf("last_meal = %ld", philo->last_meal_time);
+				printf("last_meal = %ld\n", philo->last_meal_time);
 				pthread_mutex_lock(sim->simulation);
 				return (NULL);
 			}
