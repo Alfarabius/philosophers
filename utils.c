@@ -27,13 +27,25 @@ int	ft_atoi(const char *str)
 	return ((int)result * sign);
 }
 
-time_t	get_timestamp(t_philo philo)
+time_t	get_time()
 {
 	struct timeval	time;
-	time_t			curr;
 
 	gettimeofday(&time, NULL);
-	curr = (time.tv_usec / 1000) + \
-	(time.tv_sec * 1000) - *philo.start_time;
-	return (curr);
+	return ((time.tv_usec / 1000) +	(time.tv_sec * 1000));
 }
+
+time_t	get_timestamp(t_philo philo)
+{
+	return (get_time() - *philo.start_time);
+}
+
+void	ft_delay(time_t pause)
+{
+	time_t	start_time;
+
+	start_time = get_time();
+	while (get_time() - start_time < pause)
+		usleep(500);
+}
+

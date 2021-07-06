@@ -10,7 +10,7 @@ void	sleep_(t_philo *self, time_t time_to_sleep)
 	pthread_mutex_lock(self->log);
 	printf ("%ld %d is sleeping\n", time, number);
 	pthread_mutex_unlock(self->log);
-	usleep(time_to_sleep * 1000);
+	ft_delay(time_to_sleep);
 }
 
 void	eat(t_philo *self, time_t time_to_eat)
@@ -22,7 +22,7 @@ void	eat(t_philo *self, time_t time_to_eat)
 	pthread_mutex_lock(self->log);
 	printf ("%ld %d is eating\n", self->last_meal_time, number);
 	pthread_mutex_unlock(self->log);
-	usleep(time_to_eat * 1000);
+	ft_delay(time_to_eat);
 	self->eating_times += 1;
 }
 

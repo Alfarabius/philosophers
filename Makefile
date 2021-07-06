@@ -28,10 +28,10 @@ all: init $(NAME)
 
 $(OBJS_PATH)/%.o:	$(SRCS_PATH)/%.c $(HEAD)
 	@ echo "compile $@"
-	@ $(CC) $(CFLAGS) $(INC) -c $< -o $@ -g
+	@ $(CC) -pthread -lpthread $(CFLAGS) $(INC) -c $< -o $@ -g
 
 $(NAME):	$(HEAD)	$(OBJS)
-	@ $(CC) $(CFLAGS) $(INC) $(OBJS) -o $(NAME)
+	@ $(CC) -pthread -lpthread $(CFLAGS) $(INC) $(OBJS) -o $(NAME)
 
 $(NAME_BONUS):
 	@ echo "not now"

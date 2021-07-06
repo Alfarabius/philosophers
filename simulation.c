@@ -32,7 +32,6 @@ static void	*dead_checker(void *simul)
 void	start_simulation(t_philo **philo, t_opts *opts, t_sim *sim)
 {
 	int				number;
-	struct timeval	time;
 
 	number = 0;
 	while (number < opts->philo_amount)
@@ -40,8 +39,7 @@ void	start_simulation(t_philo **philo, t_opts *opts, t_sim *sim)
 		pthread_create(&philo[number]->life, NULL, start, (void *)philo[number]);
 		number++;
 	}
-	gettimeofday(&time, NULL);
-	*sim->start_time =	(time.tv_usec / 1000) + (time.tv_sec * 1000);
+	*sim->start_time =	get_time();
 	pthread_mutex_unlock(sim->is_start);
 	dead_checker((void *)sim);
 }

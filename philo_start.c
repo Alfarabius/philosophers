@@ -19,7 +19,7 @@ void	*start(void *self)
 	pthread_mutex_unlock(philo->is_start);
 	philo->last_meal_time = get_timestamp(*philo);
 	if ((philo->number & 1) == 0)
-		usleep(500);
+		ft_delay(philo->opts->time_to_sleep);
 	while (TRUE)
 	{
 		check_simulation(philo);

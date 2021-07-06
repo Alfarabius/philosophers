@@ -73,6 +73,8 @@ void		think(void *self);
 void		take_a_fork(t_philo *self, pthread_mutex_t *fork);
 void		pick_fork(pthread_mutex_t *fork);
 void		put_fork(pthread_mutex_t *fork);
+void		ft_delay(time_t pause);
+time_t		get_time();
 time_t		get_timestamp(t_philo philo);
 
 #endif
