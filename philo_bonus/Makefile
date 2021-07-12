@@ -1,5 +1,4 @@
-NAME		=	philo
-NAME_BONUS	=	philo_bonus
+NAME		=	philo_bonus
 SRCS_PATH	=	./
 OBJS_PATH	=	./objs
 INC_PATH	=	./
@@ -32,9 +31,6 @@ $(OBJS_PATH)/%.o:	$(SRCS_PATH)/%.c $(HEAD)
 
 $(NAME):	$(HEAD)	$(OBJS)
 	@ $(CC) $(CFLAGS) $(INC) $(OBJS) -o $(NAME)
-
-$(NAME_BONUS):
-	@ echo "not now"
 
 init:
 	@ mkdir -p $(OBJS_PATH)

@@ -27,17 +27,17 @@ int	ft_atoi(const char *str)
 	return ((int)result * sign);
 }
 
-time_t	get_time()
+time_t	get_time(void)
 {
 	struct timeval	time;
 
 	gettimeofday(&time, NULL);
-	return ((time.tv_usec / 1000) +	(time.tv_sec * 1000));
+	return ((time.tv_usec / 1000) + (time.tv_sec * 1000));
 }
 
 time_t	get_timestamp(t_philo philo)
 {
-	return (get_time() - *philo.start_time);
+	return (get_time() - *philo.sim->start_time);
 }
 
 void	ft_delay(time_t pause)
@@ -47,4 +47,14 @@ void	ft_delay(time_t pause)
 	start_time = get_time();
 	while (get_time() - start_time < pause)
 		usleep(500);
+}
+
+size_t	ft_strlen(STRING str)
+{
+	size_t	len;
+
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
 }
